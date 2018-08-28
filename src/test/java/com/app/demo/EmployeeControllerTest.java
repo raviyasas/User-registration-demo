@@ -4,18 +4,25 @@ import com.app.demo.controller.EmployeeController;
 import com.app.demo.model.Employee;
 import com.app.demo.repository.EmployeeRepository;
 import com.app.demo.service.EmployeeService;
+import org.assertj.core.api.Assertions;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.mockito.BDDMockito;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.HttpMethod;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.MockMvcBuilder;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
+import org.springframework.test.web.servlet.setup.MockMvcBuilders;
+
 import java.util.ArrayList;
 import java.util.List;
 import static org.mockito.BDDMockito.given;
+import static org.mockito.Mockito.mockitoSession;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -42,7 +49,6 @@ public class EmployeeControllerTest {
         employee.setDepartment(null);
 
         given(employeeService.getEmployee(1)).willReturn(java.util.Optional.ofNullable(employee));
-
         mockMvc.perform(MockMvcRequestBuilders.get("/api/employee/getEmployee/1"))
                 .andExpect(jsonPath("empName").value("Ashan"))
                 .andExpect(jsonPath("password").value("1234"))
@@ -52,11 +58,25 @@ public class EmployeeControllerTest {
 
     @Test
     public void getAllEmployee() throws Exception{
-
         given(employeeService.getAllEmployees()).willReturn(new ArrayList<>());
-
         mockMvc.perform(MockMvcRequestBuilders.get("/api/employee/getAll"))
                 .andExpect(status().isOk());
+    }
+
+    @Test
+    public void saveEmployee() throws Exception{
+        Employee employee = new Employee();
+        employee.setEmpName("Test");
+        employee.setPassword("1234");
+        employee.setEmail("test@live.com");
+        employee.setDepartment(null);
+
+        Mockito.when(employeeService.addEmployee(Mockito.any(Employee.class))).thenReturn(employee);
+
+        mockMvc.perform(MockMvcRequestBuilders.post("/api/employee/register"))
+                .andExpect(status().isOk());
+
+//        Assertions.assertThat(employee).isEqualTo(employeeRepository.findByName("Test"));
     }
 
 }
