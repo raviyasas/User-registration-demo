@@ -30,11 +30,11 @@ public class Employee implements Serializable {
     @OneToMany(mappedBy = "employee", cascade = CascadeType.ALL,orphanRemoval = true)
     private List<Account> accounts;
 
-//    @ManyToMany(cascade = {CascadeType.PERSIST,CascadeType.MERGE})
-//    @JoinTable(
-//            name = "employee_task",
-//            joinColumns = @JoinColumn(name = "employee_id"),
-//            inverseJoinColumns = @JoinColumn(name = "task_id"))
-//    private List<Task> tasks;
+    @ManyToMany(cascade = {CascadeType.PERSIST,CascadeType.MERGE})
+    @JoinTable(
+            name = "employee_task",
+            joinColumns = @JoinColumn(name = "employee_id"),
+            inverseJoinColumns = @JoinColumn(name = "task_id"))
+    private List<Task> tasks;
 
 }

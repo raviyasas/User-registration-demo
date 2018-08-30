@@ -76,7 +76,6 @@ public class EmployeeControllerTest {
         mockMvc.perform(MockMvcRequestBuilders.post("/api/employee/register"))
                 .andExpect(status().isOk());
 
-//        Assertions.assertThat(employee).isEqualTo(employeeRepository.findByName("Test"));
     }
 
 }

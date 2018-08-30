@@ -4,17 +4,15 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.NaturalId;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.ManyToMany;
+
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.List;
-import java.util.Set;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
+@Entity
 public class Task implements Serializable {
 
     @Id
@@ -24,8 +22,7 @@ public class Task implements Serializable {
     private String taskName;
     private String description;
 
-//    @ManyToMany(mappedBy = "tasks")
-//    private List<Employee> employees;
-
+    @ManyToMany(mappedBy = "tasks")
+    private List<Employee> employees;
 
 }
