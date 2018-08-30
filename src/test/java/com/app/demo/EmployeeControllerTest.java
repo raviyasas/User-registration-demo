@@ -1,6 +1,7 @@
 package com.app.demo;
 
 import com.app.demo.controller.EmployeeController;
+import com.app.demo.dto.EmployeeDto;
 import com.app.demo.model.Employee;
 import com.app.demo.repository.EmployeeRepository;
 import com.app.demo.service.EmployeeService;
@@ -71,7 +72,7 @@ public class EmployeeControllerTest {
         employee.setEmail("test@live.com");
         employee.setDepartment(null);
 
-        Mockito.when(employeeService.addEmployee(Mockito.any(Employee.class))).thenReturn(employee);
+        Mockito.when(employeeService.addEmployee(Mockito.any(EmployeeDto.class))).thenReturn(employee);
 
         mockMvc.perform(MockMvcRequestBuilders.post("/api/employee/register"))
                 .andExpect(status().isOk());

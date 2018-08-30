@@ -41,4 +41,7 @@ public class EmployeeService {
         return employeeRepository.findById(id);
     }
 
+    public void removeEmployee(Integer id) {
+        employeeRepository.deleteById(id);
+    }
 }
